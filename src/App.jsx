@@ -60,7 +60,7 @@ const App = () => {
   };
 
   return (
-    <main className="overflow-hidden relative">
+    <main className="overflow-hidden relative selection:bg-emerald-500 selection:text-white">
       <section className="bg-[#e8e8e8] h-screen w-screen flex justify-center">
         <div className="px-7 py-5 rounded-md flex flex-col gap-5 mt-40 items-center">
           <form
@@ -76,13 +76,13 @@ const App = () => {
             />
             <button
               type="submit"
-              className="py-1 px-2 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600 duration-200"
+              className="py-1 px-2 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600 select-none duration-200"
             >
               Add
             </button>
           </form>
 
-          <div className="flex flex-col gap-3 w-full mt-4">
+          <div className="flex flex-col gap-3 w-full mt-4 overflow-y-scroll">
             {tasks.map(({ id, task }) => (
               <div
                 key={id}
@@ -91,7 +91,7 @@ const App = () => {
                 <h1 className="px-3 py-0.5">{task}</h1>
                 <button
                   onClick={() => deleteTask(id)}
-                  className="py-1 px-2 bg-emerald-500 text-white font-bold rounded-md hover:bg-emerald-600 duration-200"
+                  className="py-1 px-2 bg-emerald-500 text-white font-bold rounded-md hover:bg-emerald-600 select-none duration-200"
                 >
                   Done!
                 </button>
@@ -103,21 +103,22 @@ const App = () => {
         <div
           className={`${
             loading ? "flex" : "hidden"
-          } absolute z-20 flex justify-center items-center h-screen duration-300`}
+          } absolute z-20 flex justify-center items-center h-screen select-none duration-300`}
         >
-          <span className={`${loading ? "h-auto" : "h-0"} flex-col justify-center items-center px-10 py-5 bg-slate-100 rounded-md shadow-xl duration-300`}>
+          <span className={`${loading ? "h-auto" : "h-0"} flex flex-col justify-center items-center gap-6 px-10 py-5 bg-slate-100 rounded-md shadow-xl duration-300`}>
+            <h1 className="text-3xl font-bold text-center">Are you sure</h1>
             <div>
               <button
                 onClick={confirmDelete}
                 className="py-2 px-4 bg-green-500 text-white font-bold rounded-md hover:bg-green-600 duration-200"
               >
-                Confirm
+                Of course
               </button>
               <button
                 onClick={cancelDelete}
                 className="py-2 px-4 bg-gray-500 text-white font-bold rounded-md hover:bg-gray-600 duration-200 ml-3"
               >
-                Cancel
+                Nope
               </button>
             </div>
           </span>
