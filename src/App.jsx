@@ -105,10 +105,15 @@ const App = () => {
             loading ? "flex" : "hidden"
           } absolute z-20 flex justify-center items-center h-screen select-none duration-300`}
         >
-          <span className={`${loading ? "h-auto" : "h-0"} flex flex-col justify-center items-center gap-6 px-10 py-5 bg-slate-100 rounded-md shadow-xl duration-300`}>
+          <span
+            className={`${
+              loading ? "h-auto" : "h-0"
+            } flex flex-col justify-center items-center gap-6 px-10 py-5 bg-slate-100 rounded-md shadow-xl duration-300`}
+          >
             <h1 className="text-3xl font-bold text-center">Are you sure</h1>
             <div>
               <button
+                type="submit"
                 onClick={confirmDelete}
                 className="py-2 px-4 bg-green-500 text-white font-bold rounded-md hover:bg-green-600 duration-200"
               >
