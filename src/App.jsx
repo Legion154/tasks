@@ -60,8 +60,8 @@ const App = () => {
   };
 
   return (
-    <main className="overflow-hidden relative selection:bg-emerald-500 selection:text-white">
-      <section className="bg-[#e8e8e8] h-screen w-screen flex justify-center">
+    <main className="relative selection:bg-emerald-500 selection:text-white">
+      <section className="bg-[#e8e8e8] w-screen flex justify-center">
         <div className="px-7 py-5 rounded-md flex flex-col gap-5 mt-40 items-center">
           <form
             onSubmit={addTask}
