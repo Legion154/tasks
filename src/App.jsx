@@ -60,8 +60,8 @@ const App = () => {
   };
 
   return (
-    <main className="relative selection:bg-emerald-500 selection:text-white">
-      <section className="bg-[#e8e8e8] w-screen flex justify-center">
+    <main className="overflow-hidden relative selection:bg-emerald-500 selection:text-white">
+      <section className="bg-[#e8e8e8] h-screen w-screen flex justify-center">
         <div className="px-7 py-5 rounded-md flex flex-col gap-5 mt-40 items-center">
           <form
             onSubmit={addTask}
@@ -103,7 +103,7 @@ const App = () => {
         <div
           className={`${
             loading ? "flex" : "hidden"
-          } absolute z-20 flex justify-center items-center select-none duration-300`}
+          } absolute z-20 flex justify-center items-center h-screen select-none duration-300`}
         >
           <span className={`${loading ? "h-auto" : "h-0"} flex flex-col justify-center items-center gap-6 px-10 py-5 bg-slate-100 rounded-md shadow-xl duration-300`}>
             <h1 className="text-3xl font-bold text-center">Are you sure</h1>
