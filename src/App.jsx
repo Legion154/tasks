@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
+import "./App.css";
 
 const App = () => {
   const [task, setTask] = useState("");
   const [tasks, setTasks] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [accept, setAccept] = useState(false);
+  const [taskToDelete, setTaskToDelete] = useState(null);
 
   useEffect(() => {
     const savedTasks = JSON.parse(localStorage.getItem("tasks"));
@@ -39,13 +43,25 @@ const App = () => {
   };
 
   const deleteTask = (id) => {
-    const updatedTasks = tasks.filter((task) => task.id !== id);
+    setTaskToDelete(id);
+    setLoading(true);
+  };
+
+  const confirmDelete = () => {
+    const updatedTasks = tasks.filter((task) => task.id !== taskToDelete);
     setTasks(updatedTasks);
+    setLoading(false);
+    setAccept(false);
+  };
+
+  const cancelDelete = () => {
+    setLoading(false);
+    setAccept(false);
   };
 
   return (
-    <main className="overflow-hidden">
-      <section className="from-blue-500 to-blue-600 bg-gradient-to-tl h-screen w-screen flex justify-center">
+    <main className="overflow-hidden relative">
+      <section className="bg-[#e8e8e8] h-screen w-screen flex justify-center">
         <div className="px-7 py-5 rounded-md flex flex-col gap-5 mt-40 items-center">
           <form
             onSubmit={addTask}
@@ -82,6 +98,29 @@ const App = () => {
               </div>
             ))}
           </div>
+        </div>
+
+        <div
+          className={`${
+            loading ? "flex" : "hidden"
+          } absolute z-20 flex justify-center items-center h-screen duration-300`}
+        >
+          <span className={`${loading ? "h-auto" : "h-0"} flex-col justify-center items-center px-10 py-5 bg-slate-100 rounded-md shadow-xl duration-300`}>
+            <div>
+              <button
+                onClick={confirmDelete}
+                className="py-2 px-4 bg-green-500 text-white font-bold rounded-md hover:bg-green-600 duration-200"
+              >
+                Confirm
+              </button>
+              <button
+                onClick={cancelDelete}
+                className="py-2 px-4 bg-gray-500 text-white font-bold rounded-md hover:bg-gray-600 duration-200 ml-3"
+              >
+                Cancel
+              </button>
+            </div>
+          </span>
         </div>
       </section>
     </main>
