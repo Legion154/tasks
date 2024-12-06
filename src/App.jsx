@@ -76,7 +76,7 @@ const App = () => {
             />
             <button
               type="submit"
-              className="py-1 px-2 bg-emerald-500 text-white font-bold rounded-md hover:bg-emerald-600 duration-200"
+              className="py-1 px-2 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600 duration-200"
             >
               Add
             </button>
@@ -91,9 +91,9 @@ const App = () => {
                 <h1 className="px-3 py-0.5">{task}</h1>
                 <button
                   onClick={() => deleteTask(id)}
-                  className="py-1 px-2 bg-red-500 text-white font-bold rounded-md hover:bg-red-600 duration-200"
+                  className="py-1 px-2 bg-emerald-500 text-white font-bold rounded-md hover:bg-emerald-600 duration-200"
                 >
-                  Delete
+                  Done!
                 </button>
               </div>
             ))}
