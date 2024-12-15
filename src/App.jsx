@@ -12,12 +12,10 @@ const App = () => {
   const [task, setTask] = useState("");
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [taskToDelete, setTaskToDelete] = useState(null);
   const [lang, setLang] = useState(() => {
     const savedLang = localStorage.getItem("lang");
     return savedLang ? savedLang : "en";
   });
-
   const [menuOpen, setMenuOpen] = useState(false);
 
   const english = {
@@ -105,26 +103,34 @@ const App = () => {
   };
 
   const deleteTask = (id) => {
+    // Delete only from the completedTasks array
     const taskToDelete = completedTasks.find((task) => task.id === id);
 
     if (taskToDelete) {
       const updatedCompletedTasks = completedTasks.filter(
         (task) => task.id !== id
       );
-      setCompletedtasks(updatedCompletedTasks);
 
+      setCompletedtasks(updatedCompletedTasks);
       localStorage.setItem(
         "completedTasks",
         JSON.stringify(updatedCompletedTasks)
       );
     }
-
-    setLoading(false);
   };
 
   const confirmDelete = () => {
+    // Delete task from tasks array
     setTasks(tasks.filter((task) => task.id !== taskToConfirm.id));
+
+    // Add the task to completed tasks
     setCompletedtasks([...completedTasks, taskToConfirm]);
+
+    // Persist the changes
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+    localStorage.setItem("completedTasks", JSON.stringify(completedTasks));
+
+    // Reset confirmation state
     setTaskToConfirm(null);
     setLoading(false);
   };
@@ -147,41 +153,7 @@ const App = () => {
       setMenuOpen(false);
     }
   };
-  
-  useEffect(() => {
-    const savedTasks = JSON.parse(localStorage.getItem("tasks"));
-    if (savedTasks) {
-      setTasks(savedTasks);
-    }
-  
-    const savedCompletedTasks = JSON.parse(localStorage.getItem("completedTasks"));
-    const savedDate = localStorage.getItem("completedTasksDate");
-  
-    
-    const today = new Date().toISOString().split('T')[0]; 
-    if (savedCompletedTasks && savedDate === today) {
-      setCompletedtasks(savedCompletedTasks);
-    } else {
-      
-      localStorage.removeItem("completedTasks");
-      localStorage.setItem("completedTasksDate", today);
-      setCompletedtasks([]);
-    }
-  }, []);
-  
-  useEffect(() => {
-    if (tasks.length > 0) {
-      localStorage.setItem("tasks", JSON.stringify(tasks));
-    }
-  }, [tasks]);
-  
-  useEffect(() => {
-    if (completedTasks.length > 0) {
-      localStorage.setItem("completedTasks", JSON.stringify(completedTasks));
-      localStorage.setItem("completedTasksDate", new Date().toISOString().split('T')[0]); 
-    }
-  }, [completedTasks]);
-  
+
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
     return () => {
@@ -280,13 +252,15 @@ const App = () => {
 
         {/* BACK BUTTON */}
 
-        <button
-          onClick={() => setH1story(false)}
-          type="button"
-          className="px-7 py-3 font-medium text-white bg-red-500 rounded-md absolute bottom-3"
-        >
-          <i className="fa-solid fa-arrow-left pr-2"></i> Back
-        </button>
+        <span className="absolute bottom-3">
+          <button
+            onClick={() => setH1story(false)}
+            type="button"
+            className="px-7 py-3 font-medium text-white bg-red-500 rounded-md"
+          >
+            <i className="fa-solid fa-arrow-left pr-2"></i> Back
+          </button>
+        </span>
       </div>
 
       <section className="h-screen w-full flex justify-center pb-14">
