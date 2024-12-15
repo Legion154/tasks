@@ -271,7 +271,7 @@ const App = () => {
         </div>
       </div>
 
-      <section className="h-screen w-full flex justify-center">
+      <section className="h-screen w-full flex justify-center p-32">
         <div className="px-7 py-5 rounded-md flex flex-col gap-5 mt-28 items-center w-full sm:w-auto">
           <form
             onSubmit={addTask}
