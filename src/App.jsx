@@ -181,9 +181,7 @@ const App = () => {
       {/* LANG TOGGLE */}
 
       <div
-        className={`language-menu ${
-          menuOpen ? "h-auto py-3" : "h-0 py-0"
-        } absolute rounded-md top-10 shadow-lg shadow-gray-500/10 p-3 border border-transparent bg-primary focus:outline-none overflow-hidden duration-300`}
+        className={`language-menu ${menuOpen ? "h-auto py-3" : "h-0 py-0"} absolute rounded-md top-10 shadow-lg shadow-gray-500/10 p-3 border border-transparent bg-primary focus:outline-none overflow-hidden duration-300`}
       >
         <div
           onClick={() => switchLanguage("en")}
@@ -252,15 +250,13 @@ const App = () => {
 
         {/* BACK BUTTON */}
 
-        <span className="absolute bottom-3">
-          <button
-            onClick={() => setH1story(false)}
-            type="button"
-            className="px-7 py-3 font-medium text-white bg-red-500 rounded-md"
-          >
-            <i className="fa-solid fa-arrow-left pr-2"></i> Back
-          </button>
-        </span>
+        <button
+          onClick={() => setH1story(false)}
+          type="button"
+          className="px-7 py-3 font-medium text-white bg-red-500 rounded-md absolute bottom-6"
+        >
+          <i className="fa-solid fa-arrow-left pr-2"></i> Back
+        </button>
       </div>
 
       <section className="h-screen w-full flex justify-center pb-14">
