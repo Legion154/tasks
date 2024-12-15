@@ -25,6 +25,8 @@ const App = () => {
     no: "Nope",
     remove: "Remove",
     admission: "Are you sure!",
+    historyInt: "Finished tasks of todays",
+    back: "Back",
   };
 
   const russian = {
@@ -34,6 +36,8 @@ const App = () => {
     no: "Нет",
     remove: "Удалять",
     admission: "Вы уверены!",
+    historyInt: "Выполненные задачи на сегодня",
+    back: "Назад",
   };
 
   const uzbek = {
@@ -43,6 +47,8 @@ const App = () => {
     no: "Yo'q",
     remove: "O'chirish",
     admission: "Aniqmi!",
+    historyInt: "Bugungi kunning tugallangan vazifalari",
+    back: "Orqaga",
   };
 
   useEffect(() => {
@@ -103,7 +109,6 @@ const App = () => {
   };
 
   const deleteTask = (id) => {
-    // Delete only from the completedTasks array
     const taskToDelete = completedTasks.find((task) => task.id === id);
 
     if (taskToDelete) {
@@ -120,17 +125,13 @@ const App = () => {
   };
 
   const confirmDelete = () => {
-    // Delete task from tasks array
     setTasks(tasks.filter((task) => task.id !== taskToConfirm.id));
 
-    // Add the task to completed tasks
     setCompletedtasks([...completedTasks, taskToConfirm]);
 
-    // Persist the changes
     localStorage.setItem("tasks", JSON.stringify(tasks));
     localStorage.setItem("completedTasks", JSON.stringify(completedTasks));
 
-    // Reset confirmation state
     setTaskToConfirm(null);
     setLoading(false);
   };
@@ -224,7 +225,11 @@ const App = () => {
         {/* INTRO */}
 
         <span className="text-center opacity-60 relative before:absolute before:content-normal before:-bottom-1 before:left-0 before:right-0 before:m-auto before:h-[1px] before:w-full before:bg-opacity-60 before:bg-current">
-          Finished tasks of todays
+          {lang === "en"
+            ? english.historyInt
+            : lang === "ru"
+            ? russian.historyInt
+            : uzbek.historyInt}
         </span>
 
         {/* BACK BUTTON */}
@@ -234,7 +239,12 @@ const App = () => {
           type="button"
           className="px-7 py-3 font-medium text-white bg-red-500 rounded-md"
         >
-          <i className="fa-solid fa-arrow-left pr-2"></i> Back
+          <i className="fa-solid fa-arrow-left pr-2"></i>{" "}
+          {lang === "en"
+            ? english.back
+            : lang === "ru"
+            ? russian.back
+            : uzbek.back}
         </button>
 
         {/* FINISHED TASKS */}
