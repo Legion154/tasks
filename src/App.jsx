@@ -181,7 +181,9 @@ const App = () => {
       {/* LANG TOGGLE */}
 
       <div
-        className={`language-menu ${menuOpen ? "h-auto py-3" : "h-0 py-0"} absolute rounded-md top-10 shadow-lg shadow-gray-500/10 p-3 border border-transparent bg-primary focus:outline-none overflow-hidden duration-300`}
+        className={`language-menu ${
+          menuOpen ? "h-auto py-3" : "h-0 py-0"
+        } absolute rounded-md top-10 shadow-lg shadow-gray-500/10 p-3 border border-transparent bg-primary focus:outline-none overflow-hidden duration-300`}
       >
         <div
           onClick={() => switchLanguage("en")}
@@ -217,13 +219,23 @@ const App = () => {
       <div
         className={`${
           h1story ? "translate-x-0" : "translate-x-[800px]"
-        } fixed z-10 top-0 right-0 px-5 py-3 pb-20 bg-inherit w-screen h-screen flex flex-col gap-7 overflow-hidden duration-500 sm:hidden`}
+        } fixed z-10 top-0 right-0 px-5 py-3 pb-20 bg-inherit w-screen h-screen flex flex-col gap-5 overflow-hidden duration-500 sm:hidden`}
       >
         {/* INTRO */}
 
         <span className="text-center opacity-60 relative before:absolute before:content-normal before:-bottom-1 before:left-0 before:right-0 before:m-auto before:h-[1px] before:w-full before:bg-opacity-60 before:bg-current">
           Finished tasks of todays
         </span>
+
+        {/* BACK BUTTON */}
+
+        <button
+          onClick={() => setH1story(false)}
+          type="button"
+          className="px-7 py-3 font-medium text-white bg-red-500 rounded-md"
+        >
+          <i className="fa-solid fa-arrow-left pr-2"></i> Back
+        </button>
 
         {/* FINISHED TASKS */}
 
@@ -247,16 +259,6 @@ const App = () => {
             </div>
           ))}
         </div>
-
-        {/* BACK BUTTON */}
-
-        <button
-          onClick={() => setH1story(false)}
-          type="button"
-          className="px-7 py-3 font-medium text-white bg-red-500 rounded-md absolute bottom-6"
-        >
-          <i className="fa-solid fa-arrow-left pr-2"></i> Back
-        </button>
       </div>
 
       <section className="h-screen w-full flex justify-center pb-14">
