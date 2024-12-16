@@ -167,7 +167,7 @@ const App = () => {
       <div className="flex flex-row items-center justify-between px-5 py-3">
         <div
           onClick={() => setMenuOpen((prev) => !prev)}
-          className="font-thin cursor-pointer select-none text-lg lang-toggle-btn"
+          className="cursor-pointer select-none text-lg lang-toggle-btn"
         >
           <span>{lang === "en" ? "EN" : lang === "ru" ? "RU" : "UZ"}</span>
         </div>
