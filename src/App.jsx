@@ -215,62 +215,6 @@ const App = () => {
         </div>
       </div>
 
-      {/* HISTORY */}
-
-      <div
-        className={`${
-          h1story ? "translate-x-0" : "translate-x-[800px]"
-        } fixed z-10 top-0 right-0 px-5 py-3 pb-20 bg-inherit w-screen h-screen flex flex-col gap-5 overflow-hidden duration-500 sm:hidden`}
-      >
-        {/* INTRO */}
-
-        <span className="text-center opacity-60 relative before:absolute before:content-normal before:-bottom-1 before:left-0 before:right-0 before:m-auto before:h-[1px] before:w-full before:bg-opacity-60 before:bg-current">
-          {lang === "en"
-            ? english.historyInt
-            : lang === "ru"
-            ? russian.historyInt
-            : uzbek.historyInt}
-        </span>
-
-        {/* BACK BUTTON */}
-
-        <button
-          onClick={() => setH1story(false)}
-          type="button"
-          className="px-7 py-3 font-medium text-white bg-red-500 rounded-md"
-        >
-          <i className="fa-solid fa-arrow-left pr-2"></i>{" "}
-          {lang === "en"
-            ? english.back
-            : lang === "ru"
-            ? russian.back
-            : uzbek.back}
-        </button>
-
-        {/* FINISHED TASKS */}
-
-        <div className="flex flex-col gap-4 overflow-y-scroll overflow-x-hidden">
-          {completedTasks.map(({ id, task }) => (
-            <div
-              key={`completed_${id}`}
-              className="flex flex-row items-center justify-between gap-4 bg-white rounded-md px-5 py-5"
-            >
-              <h1 className="px-3 py-0.5">{task}</h1>
-              <button
-                onClick={() => deleteTask(id)}
-                className="py-1 px-2 bg-red-500 text-white font-bold rounded-md hover:bg-red-600 select-none duration-200"
-              >
-                {lang === "en"
-                  ? english.remove
-                  : lang === "ru"
-                  ? russian.remove
-                  : uzbek.remove}
-              </button>
-            </div>
-          ))}
-        </div>
-      </div>
-
       <section className="h-screen w-full flex justify-center pb-28">
         <div className="px-7 py-5 rounded-md flex flex-col gap-5 mt-28 items-center w-full sm:w-auto">
           <form
@@ -305,7 +249,7 @@ const App = () => {
                 key={`task_${id}`}
                 className="flex flex-row items-center justify-between gap-4 bg-white rounded-md px-5 py-5"
               >
-                <h1 className="px-3 py-0.5">{task}</h1>
+                <h1 className="px-3 py-0.5 text-pretty">{task}</h1>
                 <button
                   onClick={() => completedTask(id)}
                   className="py-1 px-2 bg-emerald-500 text-white font-bold rounded-md hover:bg-emerald-600 select-none duration-200"
@@ -366,6 +310,62 @@ const App = () => {
           </span>
         </div>
       </section>
+
+      {/* HISTORY */}
+
+      <div
+        className={`${
+          h1story ? "translate-x-0" : "translate-x-[800px]"
+        } fixed z-10 top-0 right-0 px-5 py-3 pb-20 bg-inherit w-screen h-screen flex flex-col gap-5 overflow-hidden duration-500 sm:hidden`}
+      >
+        {/* INTRO */}
+
+        <span className="text-center opacity-60 relative before:absolute before:content-normal before:-bottom-1 before:left-0 before:right-0 before:m-auto before:h-[1px] before:w-full before:bg-opacity-60 before:bg-current">
+          {lang === "en"
+            ? english.historyInt
+            : lang === "ru"
+            ? russian.historyInt
+            : uzbek.historyInt}
+        </span>
+
+        {/* BACK BUTTON */}
+
+        <button
+          onClick={() => setH1story(false)}
+          type="button"
+          className="px-7 py-3 font-medium text-white bg-red-500 active:bg-red-600 rounded-md duration-200"
+        >
+          <i className="fa-solid fa-arrow-left pr-2"></i>{" "}
+          {lang === "en"
+            ? english.back
+            : lang === "ru"
+            ? russian.back
+            : uzbek.back}
+        </button>
+
+        {/* FINISHED TASKS */}
+
+        <div className="flex flex-col gap-4 overflow-y-scroll overflow-x-hidden">
+          {completedTasks.map(({ id, task }) => (
+            <div
+              key={`completed_${id}`}
+              className="flex flex-row items-center justify-between gap-4 bg-white rounded-md px-5 py-5"
+            >
+              <h1 className="px-3 py-0.5">{task}</h1>
+              <button
+                onClick={() => deleteTask(id)}
+                className="py-1 px-2 bg-red-500 text-white font-bold rounded-md hover:bg-red-600 select-none duration-200"
+              >
+                {lang === "en"
+                  ? english.remove
+                  : lang === "ru"
+                  ? russian.remove
+                  : uzbek.remove}
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
     </main>
   );
 };
