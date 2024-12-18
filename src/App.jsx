@@ -27,6 +27,7 @@ const App = () => {
     admission: "Are you sure!",
     historyInt: "Finished tasks of todays",
     back: "Back",
+    placeholder: "Enter your task",
   };
 
   const russian = {
@@ -38,6 +39,7 @@ const App = () => {
     admission: "Вы уверены!",
     historyInt: "Выполненные задачи на сегодня",
     back: "Назад",
+    placeholder: "Введите вашу задачу",
   };
 
   const uzbek = {
@@ -49,6 +51,7 @@ const App = () => {
     admission: "Aniqmi!",
     historyInt: "Bugungi kunning tugallangan vazifalari",
     back: "Orqaga",
+    placeholder: "Vazifangizni kiriting",
   };
 
   useEffect(() => {
@@ -81,11 +84,15 @@ const App = () => {
   }, [lang]);
 
   useEffect(() => {
-    const lm = document.getElementById("lm")
-    if(lm.classList.contains("opacity-0") {
-      lm.classList.add("hidden")
+    const lm = document.getElementById("lm");
+    if (lm.classList.contains("opacity-0")) {
+      setTimeout(() => {
+        lm.classList.add("hidden");
+      }, 300);
     } else {
-      lm.classList.remove("hidden")
+      setTimeout(() => {
+        lm.classList.remove("hidden");
+      }, 300);
     }
   }, [menuOpen]);
 
@@ -96,7 +103,7 @@ const App = () => {
   const addTask = (e) => {
     e.preventDefault();
     if (!task) {
-      alert("Please fill out the task.");
+      alert("Empty.");
       return;
     }
 
@@ -235,6 +242,13 @@ const App = () => {
               autoFocus
               value={task}
               onChange={inputVal}
+              placeholder={
+                lang === "en"
+                  ? english.placeholder
+                  : lang === "ru"
+                  ? russian.placeholder
+                  : uzbek.placeholder
+              }
               type="text"
               className="bg-transparent focus:outline-none rounded-md px-3 py-0.5 border border-slate-300 w-full"
             />
