@@ -80,6 +80,15 @@ const App = () => {
     localStorage.setItem("lang", lang);
   }, [lang]);
 
+  useEffect(() => {
+    const lm = document.getElementById("lm")
+    if(lm.classList.contains("opacity-0") {
+      lm.classList.add("hidden")
+    } else {
+      lm.classList.remove("hidden")
+    }
+  }, [menuOpen]);
+
   const inputVal = (e) => {
     setTask(e.target.value);
   };
@@ -182,8 +191,9 @@ const App = () => {
       {/* LANG TOGGLE */}
 
       <div
+        id="lm"
         className={`language-menu ${
-          menuOpen ? "opacity-100 block" : "opacity-0 hidden"
+          menuOpen ? "opacity-100" : "opacity-0"
         } absolute rounded-md top-10 shadow-lg shadow-gray-500/10 py-3 p-3 border border-transparent bg-primary focus:outline-none overflow-hidden duration-200`}
       >
         <div
