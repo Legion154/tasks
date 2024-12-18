@@ -183,7 +183,7 @@ const App = () => {
 
       <div
         className={`language-menu ${
-          menuOpen ? "opacity-100" : "opacity-0"
+          menuOpen ? "opacity-100 block" : "opacity-0 hidden"
         } absolute rounded-md top-10 shadow-lg shadow-gray-500/10 py-3 p-3 border border-transparent bg-primary focus:outline-none overflow-hidden duration-200`}
       >
         <div
