@@ -3,12 +3,13 @@ import uz from "./assets/uz.png";
 import ru from "./assets/ru.png";
 import en from "./assets/en.png";
 import history from "./assets/history.png";
-import "./App.css";
 
 const App = () => {
   const [completedTasks, setCompletedtasks] = useState([]);
   const [taskToConfirm, setTaskToConfirm] = useState(null);
   const [h1story, setH1story] = useState(false);
+  const [taskFocus, setTaskfocus] = useState(false);
+  const [date, setDate] = useState("");
   const [task, setTask] = useState("");
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -28,6 +29,8 @@ const App = () => {
     historyInt: "Finished tasks of todays",
     back: "Back",
     placeholder: "Enter your task",
+    deadline: "Deadline:",
+    nullDeadline: "no deadline",
   };
 
   const russian = {
@@ -40,6 +43,8 @@ const App = () => {
     historyInt: "Выполненные задачи на сегодня",
     back: "Назад",
     placeholder: "Введите вашу задачу",
+    deadline: "Крайний срок:",
+    nullDeadline: "нет крайнего срока",
   };
 
   const uzbek = {
@@ -52,6 +57,12 @@ const App = () => {
     historyInt: "Bugungi kunning tugallangan vazifalari",
     back: "Orqaga",
     placeholder: "Vazifangizni kiriting",
+    deadline: "Muddat:",
+    nullDeadline: "muddat yo'q",
+  };
+
+  const choosenDate = (e) => {
+    setDate(e.target.value);
   };
 
   useEffect(() => {
@@ -83,19 +94,6 @@ const App = () => {
     localStorage.setItem("lang", lang);
   }, [lang]);
 
-  useEffect(() => {
-    const lm = document.getElementById("lm");
-    if (lm.classList.contains("opacity-0")) {
-      setTimeout(() => {
-        lm.classList.add("hidden");
-      }, 300);
-    } else {
-      setTimeout(() => {
-        lm.classList.remove("hidden");
-      }, 300);
-    }
-  }, [menuOpen]);
-
   const inputVal = (e) => {
     setTask(e.target.value);
   };
@@ -110,6 +108,7 @@ const App = () => {
     const newTask = {
       id: Date.now(),
       task: task,
+      deadline: date,
     };
 
     setTasks([...tasks, newTask]);
@@ -200,8 +199,8 @@ const App = () => {
       <div
         id="lm"
         className={`language-menu ${
-          menuOpen ? "opacity-100" : "opacity-0"
-        } absolute rounded-md top-10 shadow-lg shadow-gray-500/10 py-3 p-3 border border-transparent bg-primary focus:outline-none overflow-hidden duration-200`}
+          menuOpen ? "opacity-100 top-10 visible" : "opacity-0 top-8 invisible"
+        } absolute rounded-md shadow-lg shadow-gray-500/10 py-3 p-3 border border-transparent bg-primary focus:outline-none overflow-hidden duration-300`}
       >
         <div
           onClick={() => switchLanguage("en")}
@@ -233,13 +232,13 @@ const App = () => {
       </div>
 
       <section className="h-screen w-full flex justify-center pb-28">
-        <div className="px-7 py-5 rounded-md flex flex-col gap-5 mt-28 items-center w-full sm:w-auto">
+        <div className="relative px-7 py-5 rounded-md flex flex-col gap-5 mt-28 items-center w-full sm:w-auto">
           <form
             onSubmit={addTask}
             className="flex flex-row items-center gap-4 bg-white rounded-md px-5 py-5 w-full sm:w-auto"
           >
             <input
-              autoFocus
+              id="deadline"
               value={task}
               onChange={inputVal}
               placeholder={
@@ -251,6 +250,8 @@ const App = () => {
               }
               type="text"
               className="bg-transparent focus:outline-none rounded-md px-3 py-0.5 border border-slate-300 w-full"
+              onFocus={() => setTaskfocus(true)}
+              onBlur={() => setTaskfocus(false)}
             />
             <button
               type="submit"
@@ -266,24 +267,61 @@ const App = () => {
             </button>
           </form>
 
+          {/* DEADLINE */}
+          <div
+            onFocus={() => setTaskfocus(true)}
+            onBlur={() => setTaskfocus(false)}
+            className={`${
+              taskFocus
+                ? "opacity-100 -top-10 visible"
+                : "opacity-0 -top-8 invisible"
+            } absolute flex flex-row items-center bg-white rounded-md px-5 py-2 duration-300`}
+          >
+            <input
+              type="date"
+              onChange={choosenDate}
+              className="bg-transparent focus:outline-none rounded-md px-3 py-0.5"
+            />
+          </div>
+
           {/* Task List */}
           <div className="flex flex-col gap-3 w-full mt-4 overflow-y-scroll">
-            {tasks.map(({ id, task }) => (
+            {tasks.map(({ id, task, deadline }) => (
               <div
                 key={`task_${id}`}
-                className="flex flex-row items-center justify-between gap-4 bg-white rounded-md px-5 py-5"
+                className="flex flex-col gap-2 bg-white rounded-md px-5 pt-5 py-1.5"
               >
-                <h1 className="px-3 py-0.5 text-pretty">{task}</h1>
-                <button
-                  onClick={() => completedTask(id)}
-                  className="py-1 px-2 bg-emerald-500 text-white font-bold rounded-md hover:bg-emerald-600 select-none duration-200"
-                >
-                  {lang === "en"
-                    ? english.done
-                    : lang === "ru"
-                    ? russian.done
-                    : uzbek.done}
-                </button>
+                <div className="flex flex-row items-start justify-between gap-4">
+                  <h1 className="px-3 py-0.5 text-pretty">{task}</h1>
+                  <button
+                    onClick={() => completedTask(id)}
+                    className="py-1 px-2 bg-emerald-500 text-white font-bold rounded-md hover:bg-emerald-600 select-none duration-200"
+                  >
+                    {lang === "en"
+                      ? english.done
+                      : lang === "ru"
+                      ? russian.done
+                      : uzbek.done}
+                  </button>
+                </div>
+                <div className="flex flex-col gap-2">
+                  <span className="text-xs text-gray-400 font-bold">
+                    {lang === "en"
+                      ? english.deadline
+                      : lang === "ru"
+                      ? russian.deadline
+                      : uzbek.deadline}{" "}
+                    <span className="text-blue-400">
+                      {deadline && deadline !== ""
+                        ? deadline
+                        : lang === "en"
+                        ? english.nullDeadline
+                        : lang === "ru"
+                        ? russian.nullDeadline
+                        : uzbek.nullDeadline}
+                    </span>
+                  </span>
+                </div>
               </div>
             ))}
           </div>
@@ -357,7 +395,7 @@ const App = () => {
         <button
           onClick={() => setH1story(false)}
           type="button"
-          className="px-7 py-3 font-medium text-white bg-red-500 active:bg-red-600 rounded-md duration-200"
+          className="select-none px-7 py-3 font-medium text-white bg-red-500 active:bg-red-600 rounded-md duration-200"
         >
           <i className="fa-solid fa-arrow-left pr-2"></i>{" "}
           {lang === "en"
