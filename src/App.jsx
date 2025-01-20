@@ -5,11 +5,13 @@ import en from "./assets/en.png";
 import history from "./assets/history.png";
 
 const App = () => {
+  const defaultDateInp = new Date().toISOString().split("T")[0];
+
   const [completedTasks, setCompletedtasks] = useState([]);
   const [taskToConfirm, setTaskToConfirm] = useState(null);
   const [h1story, setH1story] = useState(false);
   const [taskFocus, setTaskfocus] = useState(false);
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(defaultDateInp);
   const [task, setTask] = useState("");
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -279,6 +281,7 @@ const App = () => {
           >
             <input
               type="date"
+              value={date}
               onChange={choosenDate}
               className="bg-transparent focus:outline-none rounded-md px-3 py-0.5"
             />
