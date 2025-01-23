@@ -179,6 +179,35 @@ const App = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const items = document.querySelectorAll(".sortable-item");
+    let draggedItem = null;
+
+    items.forEach((item) => {
+      item.addEventListener("dragstart", (e) => {
+        draggedItem = e.target;
+        draggedItem.classList.add("dragging");
+      });
+
+      item.addEventListener("dragend", () => {
+        draggedItem.classList.remove("dragging");
+        draggedItem = null;
+      });
+
+      item.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        const closest = [...items]
+          .filter((i) => i !== draggedItem)
+          .find(
+            (i) =>
+              e.clientY <= i.getBoundingClientRect().top + i.offsetHeight / 2
+          );
+        if (closest) sortable.insertBefore(draggedItem, closest);
+        else sortable.appendChild(draggedItem);
+      });
+    });
+  }, []);
+
   return (
     <main className="overflow-hidden relative bg-[#f4f4f4] selection:bg-emerald-500 selection:text-white w-full">
       <div className="flex flex-row items-center justify-between px-5 py-3">
@@ -288,11 +317,15 @@ const App = () => {
           </div>
 
           {/* Task List */}
-          <div className="flex flex-col gap-3 w-full mt-4 overflow-y-scroll">
+          <div
+            id="sortable"
+            className="flex flex-col gap-3 w-full mt-4 overflow-y-scroll"
+          >
             {tasks.map(({ id, task, deadline }) => (
               <div
                 key={`task_${id}`}
-                className="flex flex-col gap-2 bg-white rounded-md px-5 pt-5 py-1.5"
+                className="sortable-item flex flex-col gap-2 bg-white rounded-md cursor-grab"
+                draggable="true"
               >
                 <div className="flex flex-row items-start justify-between gap-4">
                   <h1 className="px-3 py-0.5 text-pretty">{task}</h1>
@@ -351,7 +384,8 @@ const App = () => {
             </h1>
             <div>
               <button
-                type="submit"
+                id="confirm"
+                type="button"
                 onClick={confirmDelete}
                 className="py-2 px-4 bg-green-500 text-white font-bold rounded-md hover:bg-green-600 duration-200"
               >
@@ -362,6 +396,8 @@ const App = () => {
                   : uzbek.yes}
               </button>
               <button
+                id="cancel"
+                type="button"
                 onClick={cancelDelete}
                 className="py-2 px-4 bg-gray-500 text-white font-bold rounded-md hover:bg-gray-600 duration-200 ml-3"
               >

@@ -75,3 +75,23 @@ body {
   transition: background-color 1.3s, border-color 1.3s, color 1.3s,
     transform 0.3s;
 }
+
+.dragging {
+  opacity: 0.3;
+}
+
+.sortable-item {
+  padding: 26px 20px 6px 20px;
+  animation: animateItem 0.3s linear;
+}
+
+@keyframes animateItem {
+  0% {
+    height: 0;
+    padding: 0 20px 0 20px;
+  }
+  100% {
+    height: auto;
+    padding: 26px 20px 6px 20px;
+  }
+}
